@@ -41,12 +41,18 @@ if(CPP_STARTER_USE_NANA)
   add_subdirectory(nana)
 endif()
 
+message(STATUS "vars: ${CMAKE_BINARY_DIR}")
+
 # Generic test that uses conan libs
-add_executable(intro main.cpp)
+add_executable(gserver main.cpp)
+target_include_directories(gserver PUBLIC ${CMAKE_BINARY_DIR}/external/wasm-prefix/src/wasm/core/iwasm/include)
+target_link_directories(gserver PUBLIC    ${CMAKE_BINARY_DIR}/external/wasm-prefix/src/wasm-build/lib/lib)
 target_link_libraries(
-  intro
+  gserver
   PRIVATE project_options
           project_warnings
           CONAN_PKG::docopt.cpp
           CONAN_PKG::fmt
-          CONAN_PKG::spdlog)
+          CONAN_PKG::spdlog
+			 vmlib
+			 )

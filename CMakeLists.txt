@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 
 # Set the project name to your project name, my project isn't very descriptive
-project(myproject CXX)
+project(gserver CXX)
 include(cmake/StandardProjectSettings.cmake)
 include(cmake/PreventInSourceBuilds.cmake)
 
@@ -86,6 +86,7 @@ if(ENABLE_FUZZING)
   add_subdirectory(fuzz_test)
 endif()
 
+add_subdirectory(external)
 add_subdirectory(src)
 
 option(ENABLE_UNITY "Enable Unity builds of projects" OFF)
