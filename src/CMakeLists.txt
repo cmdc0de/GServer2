@@ -42,11 +42,29 @@ if(CPP_STARTER_USE_NANA)
 endif()
 
 message(STATUS "vars: ${CMAKE_BINARY_DIR}")
+message(STATUS "system: ${CMAKE_SYSTEM_NAME}")
+set(LOWER_SYSTEM_NAME "linux")
 
 # Generic test that uses conan libs
-add_executable(gserver main.cpp)
-target_include_directories(gserver PUBLIC ${CMAKE_BINARY_DIR}/external/wasm-prefix/src/wasm/core/iwasm/include)
-target_link_directories(gserver PUBLIC    ${CMAKE_BINARY_DIR}/external/wasm-prefix/src/wasm-build/lib/lib)
+add_executable(gserver 
+		  main.cpp
+		  bh_read_file.cpp
+		  )
+		  #${CMAKE_BINARY_DIR}/external/wasm-prefix/src/wasm/core/shared/utils/uncommon/bh_read_file.c
+target_include_directories(gserver 
+		  PUBLIC 
+		  ${CMAKE_BINARY_DIR}/external/wasm-prefix/src/wasm/core/iwasm/include 
+		  #${CMAKE_BINARY_DIR}/external/wasm-prefix/src/wasm/core/shared/utils/uncommon
+		  ${CMAKE_BINARY_DIR}/external/wasm-prefix/src/wasm/core/shared/utils
+		  ${CMAKE_BINARY_DIR}/external/wasm-prefix/src/wasm/core/shared/platform/include
+		  ${CMAKE_BINARY_DIR}/external/wasm-prefix/src/wasm/core/shared/platform/${LOWER_SYSTEM_NAME}
+		  )
+
+target_link_directories(gserver 
+		  PUBLIC    
+		  ${CMAKE_BINARY_DIR}/external/wasm-prefix/src/wasm-build/lib/lib
+		  )
+
 target_link_libraries(
   gserver
   PRIVATE project_options
